@@ -1,0 +1,61 @@
+
+{% extends 'layout.html' %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4">
+        {% with messages=get_flashed_messages() %}
+        {% if messages  %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor%}
+        {% endif %}
+        {% endwith %}
+        <div class="card card-body">
+            <form action="/alta_anime" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="nombre" placeholder="Nombre">
+                </div>
+                <div class="form-group pt-2">
+                    <input class="form-control" type="text" name="estudio" placeholder="Estudio">
+                </div>
+                <div class="form-group pt-2">
+                    <input class="form-control" type="number" name="episodios" placeholder="Episodios">
+                </div>
+                <div class="form-group pt-2">
+                    <button class="btn btn-outline-dark" type="submit">Insertar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Anime</td>
+                    <td>Estudio</td>
+                    <td>Episodios</td>
+                    <td>Operaciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for anime in animes  %}
+                <tr>
+                    <td>{{anime.0}}</td>
+                    <td>{{anime.1}}</td>
+                    <td>{{anime.2}}</td>
+                    <td>{{anime.3}}</td>
+                    <td>
+                        <a class="btn btn-outline-primary" href="/edit_anime/{{anime.0}}">Editar</a>
+                        <a class="btn btn-outline-danger" href="/baja_anime/{{anime.0}}">Borrar</a>
+                    </td>
+                </tr>
+                {% endfor  %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock%}
